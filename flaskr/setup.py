@@ -1,8 +1,8 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name = 'flaskr',
-    packages = find_packages(),
+    packages = ['flaskr'],
     include_package_data = True,
     install_requires = [
         'flask',
