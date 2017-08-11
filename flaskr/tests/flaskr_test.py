@@ -1,5 +1,8 @@
 import os
-import flaskr
+# Fix for importing flaskr class
+import sys
+sys.path.append('../flaskr')
+from flaskr import flaskr
 import unittest
 import tempfile
 
