@@ -27,3 +27,16 @@ def connect_db():
     rv = sqlite3.connect(app.config['DATABASE'])
     rv.row_factory = sqlite3.Row
     return rv
+
+# Opens new db connection if there is none yet for current app context
+def get_db():
+    if not hasattr(g, 'sqlite_db'):
+        g.sqlite_db = connect_db()
+    return g.sqlite_db
+
+# Functions marked with teardown_appcontext() are called every time app context tears down
+@app.teardown_appcontext
+# Closes db again at end of request
+def close_db(error):
+    if hasattr(g, 'sqlite_db'):
+        g.sqlite_db.close()
