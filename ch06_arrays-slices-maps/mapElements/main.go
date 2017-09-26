@@ -74,6 +74,12 @@ func main() {
     },
   }
 
+  /* ====
+    Accessing an element of a map can return two values instead of just one.
+    The first value is the result of the lookup, the second tells us whether
+    or not the lookup was successful.
+  ==== */
+  
   if el, ok := elements["Li"]; ok {
     fmt.Println(el["name"], el["state"])
   }
