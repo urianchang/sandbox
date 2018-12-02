@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
-// This is a comment
+// This is a comment: To execute this file use `go run hello.go`
 
 func main() {
-	fmt.Printf("Hello, world.\n")
+	fmt.Printf("Hello, my name is Urian.\n")
+	os.Exit(0)
 }
