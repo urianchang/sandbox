@@ -44,4 +44,6 @@ zone is local.`,
 
 func init() {
 	rootCmd.AddCommand(nowCmd)
+
+	// TODO: Add flag for epoch time
 }
