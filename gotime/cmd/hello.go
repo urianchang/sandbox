@@ -9,11 +9,11 @@ import (
 	"time"
 )
 
-// sayhelloCmd represents the sayhello command
-var sayhelloCmd = &cobra.Command{
+// helloCmd represents the hello command
+var helloCmd = &cobra.Command{
 	Use:   "hello",
 	Short: "Says hello",
-	Long:  `Greets you based on the time of day`,
+	Long:  `Greeting is based on the time of day`,
 	Run: func(cmd *cobra.Command, args []string) {
 		user, err := user.Current()
 		if err != nil {
@@ -32,5 +32,5 @@ var sayhelloCmd = &cobra.Command{
 }
 
 func init() {
-	sayCmd.AddCommand(sayhelloCmd)
+	rootCmd.AddCommand(helloCmd)
 }
