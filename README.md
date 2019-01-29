@@ -459,5 +459,163 @@ __Reference__:
 * [Baeldung article on Java Static keyword](https://www.baeldung.com/java-static)
 
 
+## Classes
+A class provides the blueprint for objects; you create an object from a class.
+
+### Declaring Classes
+```
+class MyClass extends MySuperClass implements YourInterface {
+    // field, constructor, and
+    // method declarations
+}
+```
+
+In general, class declarations can include these components, in order:
+
+1. Modifiers such as `public`, `private`, etc.
+2. The class name, with the initial letter capitalized by convention.
+3. The name of the class' parent (superclass), if any, preceded by the keyword
+   `extends`. __A class can only extend (subclass) one parent.__
+4. A comma-separated list of interfaces implemented by the class, if any,
+   preceded by the keyword `implements`. A class can `implement` more than one
+   interface.
+5. The class body, surrounded by braces, {}.
+
+### Declaring Member Variables
+There are several kinds of variables:
+
+* fields: member variables in a class
+* local variables: variables in a method or block of code
+* parameters: variables in method declarations
+
+Field declarations are composed of three components, in order:
+
+1. Zero or more modifiers (e.g. `private`, `public`)
+2. The field's type
+3. The field's name
+
+#### Access Modifiers
+* `public`: field is accessible from all classes
+* `private`: field is accessible only within its own class
+
+In the spirit of encapsulation, it is common to make fields private. This means
+that they can only be _directly_ accessed from the Bicycle class. To access
+these values, we can _indirectly_ access them by adding public methods that
+obtain the field values for us.
+
+__Naming conventions__:
+
+* the first letter of a class name should be capitalized
+* the first (or only) word in a method name should be a verb
+
+### Defining Methods
+```
+public double calculateAnswer(double wingSpan, int numberOfEngines,
+                              double length, double grossTons) {
+    //do the calculation here
+}
+```
+
+The only required elements of a method declaration are the method's return type,
+name, a pair of parentheses, and a body between braces.
+
+Method declarations have six components, in order:
+
+1. Modifiers (e.g. `private`, `public`)
+2. Return type: The data type of the value returned by the method, or `void` if
+   the method does not return a value.
+3. Method name: The rules for field names apply to method names as well, but the
+   convention is a little different
+4. Parameter list in parenthesis: Comma-delimited list of input parameters,
+   preceded by their data types, enclosed by parentheses. If there are no
+   parameters, you must use empty parentheses.
+5. Exception list
+6. Method body, enclosed between braces
+
+#### Overloading Methods
+Typically, a method has a unique name within its class. However, a method might
+have the same name as other methods due to _method overloading_. Java can
+distinguish between methods with different method signatures: methods within a
+class can have the same name if they have different parameter lists.
+
+You cannot declare more than one method with the same name and the same number
+and type of arguments, because the compiler cannot tell them apart. The compiler
+does not consider return type when differentiating methods, so you cannot
+declare two methods with the same signature even if they have a different return
+type.
+
+#### Class constructors
+A class contains constructors that are invoked to create objects from the class
+blueprint. Constructor declarations look like method declarations--except that
+they use the name of the class and have no return type.
+
+```
+public Bicycle(int startCadence, int startSpeed, int startGear) {
+    gear = startGear;
+    cadence = startCadence;
+    speed = startSpeed;
+}
+
+Bicycle myBike = new Bicycle(30, 0, 8);
+```
+
+You don't have to provide any constructors for your class, but you must be
+careful when doing this. The compiler automatically provides a no-argument,
+default constructor for any class without constructors. The default constructor
+will call the no-argument constructor of the superclass. If your class has no
+explicit superclass, then it has an implicit superclass of Object, which does
+have a no-argument constructor.
+
+#### varargs
+You can use a construct called `varargs` to pass an arbitrary number of values
+to a method. You use varargs when you don't know how many of a particular type
+of argument will be passed to the method. It's a shortcut to creating an array
+manually.
+
+To use varargs, follow the type of the last parameter by an ellipsis, then a
+space, and the parameter name. The method can then be called with any number of
+that parameter, including none.
+
+```
+public Polygon polygonFrom(Point... corners) {
+    int numberOfSides = corners.length;
+    double squareOfSide1, lengthOfSide1;
+    squareOfSide1 = (corners[1].x - corners[0].x)
+                     * (corners[1].x - corners[0].x)
+                     + (corners[1].y - corners[0].y)
+                     * (corners[1].y - corners[0].y);
+    lengthOfSide1 = Math.sqrt(squareOfSide1);
+
+    // more method body code follows that creates and returns a
+    // polygon connecting the Points
+}
+```
+
+#### Parameter Names
+When you declare a parameter to a method or a constructor, you provide a name
+for that parameter. This name is used within the method body to refer to the
+passed-in argument. __The name of a parameter must be unique in its scope.__ It
+cannot be the same as the name of another parameter for the same method or
+constructor, and it cannot be the name of a local variable within the method or
+constructor.
+
+A parameter can have the same name as one of the class' fields. If this is the
+case, the parameter is said to _shadow_ the field. Shadowing fields can make
+your code difficult to read and is conventionally used only within constructors
+and methods that set a particular field.
+
+#### Passing Arguments
+Primitive arguments, such as an `int`, are passed into methods __by value__.
+This means that any changes to the values of the parameters exist only within
+the scope of the method. When the method returns, the parameters are gone and
+any changes to them are lost.
+
+Reference data type parameters, such as objects, are also passed into methods
+__by value__. This means that when the method returns, the passed-in reference
+still references the same object as before. _However,_ the values of the
+object's fields _can_ be changed in the method, if they have the proper access
+level.
+
+
 ## Further Reading
 * [Oracle Java tutorial](https://docs.oracle.com/javase/tutorial/java/TOC.html)
