@@ -1,6 +1,29 @@
 # Java Notes
 
 
+## Naming Conventions
+* Variable names are case-sensitive. An unlimited-length sequence of Unicode
+  letters and digits, beginning with a letter, the dollar sign "$", or the
+  underscore character. The convention, however, is to always begin your
+  variable names with a letter. Additionally, the dollar sign character, by
+  convention, is never used at all. You may find some situations where
+  auto-generated names will contain the dollar sign, but your variable names
+  should always avoid using it. A similar convention exists for the underscore
+  character; while it's technically legal to begin your variable's name with
+  an underscore, this practice is discouraged. White space is not permitted.
+* Subsequent characters may be letters, digits, dollar signs, or underscore
+  characters. When choosing a name for your variables, use full words instead
+  of cryptic abbreviations.
+* If the name you choose consists of only one word, spell that word in all
+  lowercase letters. If it consists of more than one word, capitalize the first
+  letter of each subsequent word (e.g. `gearRatio`). If your variable stores a
+  constant value, such as `static final int NUM_GEARS = 6`. By convention, the
+  underscore character is never used elsewhere.
+
+Keep in mind of the
+[Java keywords](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html).
+
+
 ## Primitive Data Types
 There are eight primitive data types supported by the Java programming language:
 
@@ -87,6 +110,28 @@ System.arraycopy(copyFrom, 2, copyTo, 0, 7);
 
 __Reference__:
 * [Oracle docs](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html)
+
+
+## Operators
+All binary operators except for the assignment operators are evaluated from left
+to right; assignment operators are evaluated right to left.
+
+| Operators            | Precedence                             |
+| -------------------- | -------------------------------------- |
+| postfix              | expr++ expr--                          |
+| unary                | ++expr --expr +expr -expr ~ !          |
+| multiplicative       | * / %                                  |
+| additive             | + -                                    |
+| shift                | << >> >>>                              |
+| relational           | < > <= >= instanceof                   |
+| equality             | == !=                                  |
+| bitwise AND          | &                                      |
+| bitwise exclusive OR | ^                                      |
+| bitwise inclusive OR | `|`                                    |
+| logical AND          | &&                                     |
+| logical OR           | ||                                     |
+| ternary              | ? :                                    |
+| assignment           | = += -= *= /= %= %= ^= |= <<= >>= >>>= |
 
 
 ## Control Flow Statements
@@ -292,9 +337,63 @@ to where the method was invoked. When a method is declared `void`, use the form
 of `return` that doesn't return a value `return;`.
 
 
-## Static Initialization Blocks
+## static Keyword
+The keyword `static` indicates that the particular member belongs to a type,
+rather than to an instance of that type. This means that only one instance of
+that static member is created which is shared across all instances of the class.
+
+The keyword can be applied to variables, methods, blocks, and nested class.
+
+### static Fields (class variables)
+If a field is declared `static`, then exactly a single copy of that field is
+created and shared among all instances of that class. Static variables go in a
+particular pool in JVM memory called Metaspace (before Java 8, this pool was
+called Permanent Generation or PermGen).
+
+Reasons to use `static` fields:
+
+* When the value of variable is independent of objects
+* When the value is supposed to be shared across all objects
+
+Key points to remember:
+
+* `static` variables belong to a class, so they can be accessed directly using
+  class name and don't need any object reference
+* can only be declared at the class level
+* can be accessed without object initialization
+* refer to `static` variables using class name (e.g. `Car.numberOfCars++`)
+
+### static Methods (class methods)
+Like `static` fields, `static` methods belong to a class instead of the object.
+They're meant to be used without creating objects of the class.
+
+Reasons to use `static` methods:
+
+* To access/manipulate static variables and other static methods that don't
+  depend upon objects
+* Widely used in utility and helper classes
+
+Key points to remember:
+
+* `static` methods are resolved at compile time. Since method overriding is part
+  of Runtime Polymorphism, __static methods cannot be overridden__.
+* abstract methods can't be static
+* cannot use `this` or `super` keywords
+* Following combinations of instance, class methods and variables are valid:
+
+    1. Instance methods can directly access both instance methods and instance
+       variables
+    2. Instance methods can also access `static` variables and `static` methods
+       directly
+    3. `static` methods can access all `static` variables and other `static`
+       methods
+    4. `static` methods cannot access instance variables and instance methods
+       directly; they need some object reference to do so
+
+### static Initialization Blocks
 A static initialization block is a normal block of code enclosed in braces and
-preceded by the `static` keyword.
+preceded by the `static` keyword. If `static` variables require additional,
+multi-statement logic while initialization, then a `static` block can be used.
 
 ```
 static {
@@ -302,13 +401,62 @@ static {
 }
 ```
 
-A class can have number of initialization
-blocks, and they can appear anywhere in the class body. The runtime system
-guarantees that static initialization blocks are called in the order that they
-appear in the source code.
+A class can have any number of initialization blocks, and they can appear
+anywhere in the class body. The runtime system guarantees that static
+initialization blocks are called in the order that they appear in the source
+code.
+
+Reasons to use `static` blocks:
+
+* If initialization of `static` variables requires some additional logic except
+  the assignment
+* If the initialization of `static` variables is error-prone and requires
+  exception handling
+
+### static Class
+Creating a class within a class provides a way of grouping elements that are
+only going to be used in one place. This keeps code more organized and readable.
+
+Nested class architecture is divided into two:
+
+* nested classes that are declared `static` are called __`static` nested classes__
+* nested classes that are non-`static` are called __inner classes__
+
+__IMPORTANT__: Inner classes have access to all members of the enclosing class
+(including private), whereas the `static` nested classes only have access to
+static members of the outer class.
+
+The most widely used approach to create singleton objects is through a `static`
+nested class. It doesn't require any synchronization and is easy to learn and
+implement.
+
+```
+public class Singleton  {    
+    private Singleton() {}
+
+    private static class SingletonHolder {    
+        public static final Singleton instance = new Singleton();
+    }    
+
+    public static Singleton getInstance() {    
+        return SingletonHolder.instance;    
+    }    
+}
+```
+
+Reasons to use a `static` inner class:
+
+* grouping classes that will be used only in one place increases encapsulation
+* code is brought closer to the place that will be only one to use it; this
+  increases readability and code is more maintainable
+* if nested class doesn't require any access to it's enclosing class instance
+  members, then it's better to declare it as `static` because this way, it won't
+  be couple to the outer class and hence will be more optimal as they won't
+  require any heap or stack memory
 
 __Reference__:
-* [Oracle docs](https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html)
+* [Oracle docs on initialization blocks](https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html)
+* [Baeldung article on Java Static keyword](https://www.baeldung.com/java-static)
 
 
 ## Further Reading
