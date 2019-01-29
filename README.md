@@ -413,6 +413,68 @@ Reasons to use `static` blocks:
 * If the initialization of `static` variables is error-prone and requires
   exception handling
 
+An alternative to static blocks: private static method.
+
+```
+class Whatever {
+    public static varType myVar = initializeClassVariable();
+
+    private static varType initializeClassVariable() {
+
+        // initialization code goes here
+    }
+}
+```
+
+The advantage of private static methods is that they can be reused later if you
+need to reinitialize the class variable.
+
+#### Initializing Instance Members
+There are two alternatives to using a constructor to initialize instance
+variables: initializer blocks and final methods.
+
+Initializer blocks for instance variables look just like static initializer
+blocks, but without the `static` keyword.
+
+```
+{
+    // whatever code is needed for initialization goes here
+}
+```
+
+The Java compiler copies initializer blocks into every constructor. Therefore,
+this approach can be used to share a block of code between multiple
+constructors.
+
+__Difference between static and initialization blocks__
+
+* Static initializer block will be called on loading of the class, and will have
+  no access to instance variables or methods. It is often used to create static
+  variables.
+* Non-static initializer block is created on object construction only, will have
+  access to instance variables and methods, and will be called at the beginning
+  of the constructor, after the super constructor has been called and before any
+  other subsequent constructor code is called.
+
+Reference: [One of a few StackOverflow Q&A's](https://stackoverflow.com/questions/12550135/static-block-vs-initializer-block-in-java)
+
+A _final method_ cannot be overridden in a subclass.
+
+```
+class Whatever {
+    private varType myVar = initializeInstanceVariable();
+
+    protected final varType initializeInstanceVariable() {
+
+        // initialization code goes here
+    }
+}
+```
+
+This is useful if subclasses might want to resuse the initialization method. The
+method is final because calling non-final methods during initialization can
+cause problems.
+
 ### static Class
 Creating a class within a class provides a way of grouping elements that are
 only going to be used in one place. This keeps code more organized and readable.
@@ -615,6 +677,164 @@ __by value__. This means that when the method returns, the passed-in reference
 still references the same object as before. _However,_ the values of the
 object's fields _can_ be changed in the method, if they have the proper access
 level.
+
+
+## Objects
+```
+Point originOne = new Point(23, 94);
+```
+
+Creating an object has three parts:
+
+1. Declaration: Associate a variable name with an object type.
+2. Instantiation: The `new` keyword is a Java operator that creates the object.
+3. Initialization: The `new` operator is followed by a call to a constructor,
+   which initializes the new object.
+
+### Declaration
+Simply declaring a reference variable does not create an object. For that, you
+need the `new` operator.
+
+### Instantiation
+The `new` operator instantiates a class by allocating memory for a new object
+and returning a reference to that memory. It requires a single, postfix
+argument: a call to a constructor. The name of the constructor provides the name
+of the class to instantiate. It returns a reference to the object it created.
+The reference returned by the `new` operator does not have to be assigned to a
+variable. It can also be used directly in an expression.
+
+```
+int height = new Rectangle().height;
+```
+
+### Using Objects
+```
+objectReference.fieldName
+
+objectReference.methodName(argumentList);
+```
+
+### Initialization
+Each constructor lets you provide initial values for the rectangle's origin,
+width, and height, using both primitive and reference types. If a class has
+multiple constructors, they must have different signatures. The Java compiler
+differentiates the constructors based on the number and the type of arguments.
+
+### Garbage Collector
+An object is eligible for garbage collection when there are no more references
+to that object. References that are held in a variable are usually dropped when
+the variable goes out of scope. Or, you can explicitly drop an object reference
+by setting the variable to the special value `null`. All references to an object
+must be dropped before the object is eligible for garbage collection.
+
+The Java runtime environment has a garbage collector that periodically frees the
+memory used by objects that are no longer referenced. The garbage collector does
+its job automatically when it determines that the time is right.
+
+### Returning a Class or Interface
+When a method uses a class name as its return type, the class of the type of the
+returned object must be either a subclass of, or the exact class of, the return
+type.
+
+Example:
+
+```
+// Class hierarchy of Object -> Number -> ImaginaryNumber
+
+// Can return an ImaginaryNumber but not an Object
+public Number returnANumber() {
+    ...
+}
+
+// Override a method and define it to return a subclass of the original method.
+// This is called covariant return type, meaning the return type is allowed to
+// vary in the same direction as the subclass
+public ImaginaryNumber returnANumber() {
+    ...
+}
+```
+
+### this Keyword
+Within an instance method or a constructor, `this` is a reference to the
+_current_ object: the object whose method or constructor is being called.
+
+#### Using this with a Field
+The most common reason for using the `this` keyword is because a field is
+shadowed by a method or constructor parameter.
+
+```
+public class Point {
+    public int x = 0;
+    public int y = 0;
+
+    //constructor
+    public Point(int a, int b) {
+        // x = a;
+        // y = b;
+        this.x = x;
+        this.y = y;
+    }
+}
+```
+
+#### Using this with a Constructor
+```
+public class Rectangle {
+    private int x, y;
+    private int width, height;
+
+    public Rectangle() {
+        this(0, 0, 1, 1);
+    }
+    public Rectangle(int width, int height) {
+        this(0, 0, width, height);
+    }
+    public Rectangle(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    ...
+}
+```
+
+This class contains a set of constructors. Each constructor initializes some or
+all of the rectangle's member variables. The constructors provide a default
+value for any member variable whose initial value is not provided by an
+argument.
+
+__If present, the invocation of another constructor must be the first line in
+the constructor.__
+
+### Controlling Access to Members of a Class
+There are two levels of access control:
+
+* At the top level: `public` or _package-private_ (no explicit modifier)
+* At the member level: `public`, `private`, `protected`, or _package-private_
+  (no explicit modifier)
+
+__Access Levels__
+
+| Modifier    | Class | Package | Subclass | World |
+| ----------- | :---: | :-----: | :------: | :---: |
+| public      | Y     | Y       | Y        | Y     |
+| protected   | Y     | Y       | Y        | N     |
+| no modifier | Y     | Y       | N        | N     |
+| private     | Y     | N       | N        | N     |
+
+Access levels affect you in two ways. First, when you use classes that come from
+another source, such as the classes in the Java platform, access levels
+determine which members of those classes your own classes can use. Second, when
+you write a class, you need to decide what access level every member variable
+and every method in your class should have.
+
+__Tips__
+
+* Use the most restrictive access level that makes sense for a particular
+  member. Use `private` unless you have a good reason not to.
+* Avoid `public` fields except for constants. Public fields tend to link you to
+  a particular implementation and limit your flexibility in changing your code.
 
 
 ## Further Reading
