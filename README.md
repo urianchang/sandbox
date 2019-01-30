@@ -1171,5 +1171,34 @@ __References__:
 * [When to Use Nested Classes, Local Classes, Anonymous Classes, and Lambda Expressions](https://docs.oracle.com/javase/tutorial/java/javaOO/whentouse.html)
 
 
+## Enum Types
+An _enum type_ is a special data type that enables for a variable to be a set of
+predefined constants. The variable must be equal to one of the values that have
+been predefined for it. Because they are constants, the names of an enum type's
+fields are in uppercase letters.
+
+```
+public enum Day {
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+    THURSDAY, FRIDAY, SATURDAY
+}
+```
+
+__NOTE__: You should use enum types any time you need to represent a fixed set
+of constants.
+
+The `enum` declaration defines a _class_ (called an _enum type_). The enum class
+body can include methods and other fields. The compiler automatically adds some
+special methods when it creates an enum. For example, there is a static `values`
+method that returns an array containing all of the values of the enum in the
+order they are declared.
+
+When there are fields and methods, the list of enum constants must end with a
+semicolon. Please refer to the `Planet` example in the Oracle Java docs.
+
+__References__:
+* [Oracle docs](https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html)
+
+
 ## Further Reading
 * [Oracle Java Documents](https://docs.oracle.com/javase/tutorial/java/TOC.html)
