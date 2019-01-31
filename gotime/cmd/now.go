@@ -20,14 +20,21 @@ import (
 	"time"
 )
 
+var get_epoch bool
+
 // nowCmd represents the now command
 var nowCmd = &cobra.Command{
 	Use:   "now",
 	Args: cobra.MaximumNArgs(1),
-	Short: "Retrieves the current time",
-	Long: `Gets the current time in a specified IANA time zone. The default time 
+	Short: "Get the current time",
+	Long: `Get the current time in a specified IANA time zone. The default time 
 zone is local.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		if get_epoch {
+			fmt.Println(time.Now().Unix())
+			return
+		}
+
 		if len(args) == 1 {
 			zone := args[0]
 			loc, err := time.LoadLocation(zone)
@@ -44,6 +51,5 @@ zone is local.`,
 
 func init() {
 	rootCmd.AddCommand(nowCmd)
-
-	// TODO: Add flag for epoch time
+	nowCmd.PersistentFlags().BoolVarP(&get_epoch, "epoch", "e", false,"Returns the epoch time in seconds")
 }
