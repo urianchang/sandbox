@@ -1200,5 +1200,71 @@ __References__:
 * [Oracle docs](https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html)
 
 
+## Annotations
+_Annotations,_ a form of metadata, provide data about a program that is not
+part of the program itself. Annotations have no direct effect on the operation
+of the code they annotate.
+
+__Uses__:
+* Information for the compiler
+    * Can be used by the compiler to detect errors or suppress warnings.
+* Compile-time and deployment-time processing
+    * Software tools can process annotation information to generate code, XML
+      files, and so forth.
+* Runtime processing
+    * Some annotations are available to be examined at runtime.
+
+### Basics
+```
+@Entity
+
+@Override
+void mySuperMethod() { ... }
+
+@Author(
+   name = "Benjamin Franklin",
+   date = "3/27/2003"
+)
+class MyClass() { ... }
+```
+
+The at sign character (`@`) indicates to the compiler that what follows is
+an annotation.
+
+Annotations can be applied to declarations: declarations of classes, fields,
+methods, and other program elements. When used on a declaration, each
+annotation often appears, by convention, on its own line.
+
+Many annotations replace comments in code. A good example is shown in the
+["Declaring an Annotation Type" article](https://docs.oracle.com/javase/tutorial/java/annotations/declaring.html)
+of the Oracle docs.
+
+### Predefined Annotation Types
+* @Deprecated: Indicates that the marked element is deprecated and should no
+  longer be used.
+* @Override: Informs the compiler that the element is meant to override an
+  element declared in a superclass.
+* @SuppressWarnings: Tells the compiler to suppress specific warnings that it
+  would otherwise generate.
+* @SafeVarargs: When applied to a method or constructor, asserts that the code
+  does not perform potentially unsafe operations on its varargs parameter.
+* @FunctionalInterface: Introduced in Java SE 8, indicates the type declaraction
+  is intended to be a functional interface.
+* @Retention: Specifies how the marked annotation is stored.
+* @Documented: Indicates that whenever the specified annotation is used those
+  elements should be documented using the Javadoc tool.
+* @Target: Marks another annotation to restrict what kind of Java elements the
+  annotation can be applied to.
+* @Inherited: Indicates that the annotation type can be inherited from the super
+  class.
+* @Repeatable: Introduced in Java SE 8, indicates that the marked annotation can
+  be applied more than once to the same declaration or type use.
+
+__References__:
+* [Predefined Annotation Types](https://docs.oracle.com/javase/tutorial/java/annotations/predefined.html)
+* [Type Annotations](https://docs.oracle.com/javase/tutorial/java/annotations/type_annotations.html)
+* [Repeating Annotations](https://docs.oracle.com/javase/tutorial/java/annotations/repeating.html)
+
+
 ## Further Reading
 * [Oracle Java Documents](https://docs.oracle.com/javase/tutorial/java/TOC.html)
