@@ -1,1 +1,1 @@
-Relearn, practice, and experiment with Flask
+Learn, practice, and experiment with [Flask](http://flask.pocoo.org/).
