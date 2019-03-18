@@ -1266,5 +1266,13 @@ __References__:
 * [Repeating Annotations](https://docs.oracle.com/javase/tutorial/java/annotations/repeating.html)
 
 
+## Interfaces
+WIP: [Interfaces](https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html)
+
+
+## Inheritance
+WIP: [Inheritance](https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html)
+
+
 ## Further Reading
 * [Oracle Java Documents](https://docs.oracle.com/javase/tutorial/java/TOC.html)
