@@ -2,7 +2,7 @@
 
 package main
 
-import "github.com/urianchang/gotime/cmd"
+import "github.com/urianchang/LearnGo/gotime/cmd"
 
 func main() {
 	cmd.Execute()
