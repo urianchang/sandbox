@@ -1,5 +1,5 @@
 # CHANGELOG
-## Release: 0.0.1+dev ([develop](https://github.com/urianchang/LearnGo/tree/master/pkg/gotime))
+## Release: 0.0.1+dev ([master](https://github.com/urianchang/LearnGo/tree/master/pkg/gotime))
 
 ### Summary
 Prepping for an "alpha" release
