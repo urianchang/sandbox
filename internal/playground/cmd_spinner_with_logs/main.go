@@ -57,9 +57,12 @@ func NewRootCmd() *cobra.Command {
 				SuffixAutoColon: true,
 				StopCharacter:   "✓",
 				StopColors:      []string{"fgGreen"},
+				StopFailCharacter: "✗",
+				StopFailColors: []string{"fgRed"},
+				Writer: cmd.OutOrStdout(),
 			}
 			spinner, _ := yacspin.New(cfg)
-			spinner.Start()
+			_ = spinner.Start()
 
 			for i := 0; i < seconds; i++ {
 				spinner.Message("waiting")
@@ -68,7 +71,7 @@ func NewRootCmd() *cobra.Command {
 				time.Sleep(1 * time.Second)
 			}
 
-			spinner.Stop()
+			_ = spinner.Stop()
 			return nil
 		},
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
