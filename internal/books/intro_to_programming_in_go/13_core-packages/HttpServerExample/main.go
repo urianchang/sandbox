@@ -6,7 +6,7 @@ import (
 )
 
 func hello(res http.ResponseWriter, req *http.Request) {
-	res.Header().Set("Content-Type", "text/html",)
+	res.Header().Set("Content-Type", "text/html")
 	io.WriteString(
 		res,
 		`<doctype html>
@@ -18,7 +18,7 @@ func hello(res http.ResponseWriter, req *http.Request) {
 		Hello World!
 	</body>
 </html>`,
-		)
+	)
 }
 
 func main() {

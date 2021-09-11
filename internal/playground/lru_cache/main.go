@@ -7,24 +7,24 @@ import (
 const SIZE = 5 // size of cache
 
 type Node struct {
-	Val 	string
-	Left	*Node
-	Right	*Node
+	Val   string
+	Left  *Node
+	Right *Node
 }
 
 // doubly linked list
 type Queue struct {
-	Head	*Node
-	Tail	*Node
-	Length	int
+	Head   *Node
+	Tail   *Node
+	Length int
 }
 
 // maps string to node in Queue
 type Hash map[string]*Node
 
 type Cache struct {
-	Queue	Queue
-	Hash	Hash
+	Queue Queue
+	Hash  Hash
 }
 
 // Constructor functions for Cache and Queue
@@ -108,4 +108,3 @@ func main() {
 		cache.Display()
 	}
 }
-

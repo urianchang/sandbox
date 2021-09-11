@@ -65,10 +65,3 @@ fmt.Println(x["key"])
 ```
 delete(x, 1)
 ```
-
-
-
-
-
-
-

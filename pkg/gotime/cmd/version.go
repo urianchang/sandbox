@@ -71,7 +71,7 @@ func printReleaseChanges(writer io.Writer, releaseVersion string, changelog []by
 		if shouldPrint {
 			_, err := fmt.Fprintln(writer, cleanLine(line))
 			if err != nil {
-				return fmt.Errorf( "unable to print line: %v", err)
+				return fmt.Errorf("unable to print line: %v", err)
 			}
 		}
 	}

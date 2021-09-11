@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	// Maps are Go's built-in associative data type (e.g. hashes, dicts)
-	m := make(map[string]int)	// map[key-type]val-type
+	m := make(map[string]int) // map[key-type]val-type
 	m["k1"] = 7
 	m["k2"] = 13
 	fmt.Println("map:", m)

@@ -21,7 +21,7 @@ func main() {
 		for i := 0; i < 30; i++ {
 			for j := 51; j <= 100; j++ {
 				fmt.Printf(" %d", j)
-				if j == 100{
+				if j == 100 {
 					fmt.Println()
 				}
 			}
