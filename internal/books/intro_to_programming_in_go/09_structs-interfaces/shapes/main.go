@@ -65,14 +65,14 @@ func main() {
 	cir := Circle{x: 0, y: 0, r: 5}
 
 	fmt.Println("Area")
-	fmt.Println(rec.area())      // 100
-	fmt.Println(cir.area())      // 78.53981633974483
+	fmt.Println(rec.area()) // 100
+	fmt.Println(cir.area()) // 78.53981633974483
 
 	fmt.Println("\nPerimeter")
 	fmt.Println(rec.perimeter()) // 40
 	fmt.Println(cir.perimeter()) // 31.41592653589793
 
 	fmt.Println("\nTotal")
-	fmt.Println(totalArea(&rec, &cir)) // 178.53981633974485
-	fmt.Println(totalPerimeter(&rec, &cir))	// 71.41592653589794
+	fmt.Println(totalArea(&rec, &cir))      // 178.53981633974485
+	fmt.Println(totalPerimeter(&rec, &cir)) // 71.41592653589794
 }

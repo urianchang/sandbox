@@ -13,4 +13,3 @@ In Go, if something starts with a capital letter that means other packages
 instead of `Average`, our `main` program would not have been able to see it.
 
 **NOTE**: Package names match the folders they fall in.
-

@@ -24,14 +24,14 @@ func main() {
 	go func() {
 		for {
 			select {
-			case msg1 := <- c1:
+			case msg1 := <-c1:
 				fmt.Println("Message 1", msg1)
-			case msg2 := <- c2:
+			case msg2 := <-c2:
 				fmt.Println("Message 2", msg2)
-			case <- time.After(time.Second):
+			case <-time.After(time.Second):
 				fmt.Println("timeout")
-			//default:
-			//	fmt.Println("nothing ready")
+				//default:
+				//	fmt.Println("nothing ready")
 			}
 		}
 	}()

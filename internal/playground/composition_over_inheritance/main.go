@@ -5,8 +5,8 @@ import (
 )
 
 type Duck struct {
-	ID 		int64
-	Name	string
+	ID   int64
+	Name string
 }
 
 func (d *Duck) Eat() {
@@ -15,7 +15,7 @@ func (d *Duck) Eat() {
 
 type Mallard struct {
 	Duck
-	Color 	string
+	Color string
 }
 
 func (m *Mallard) Sleep() {
@@ -31,7 +31,7 @@ func main() {
 	mallard.Color = "Green"
 	mallard.Duck = *duck
 
-	duck.Eat()		// Duck Pickles eats!
-	mallard.Eat()	// Duck Pickles eats!
-	mallard.Sleep()	// Mallard Pickles eats!
+	duck.Eat()      // Duck Pickles eats!
+	mallard.Eat()   // Duck Pickles eats!
+	mallard.Sleep() // Mallard Pickles eats!
 }

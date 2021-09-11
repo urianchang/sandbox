@@ -12,7 +12,7 @@ func main() {
 
 	const num = 5000
 	const val = 5e10 / num
-	fmt.Println(val)	// arbitrary precision
+	fmt.Println(val) // arbitrary precision
 
 	// numeric constant has no type until given one
 	fmt.Println(int32(val))

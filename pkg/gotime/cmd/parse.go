@@ -15,7 +15,7 @@ func init() {
 // parseCmd represents the parse command
 var parseCmd = &cobra.Command{
 	Use:   "parse",
-	Args: cobra.MinimumNArgs(1),
+	Args:  cobra.MinimumNArgs(1),
 	Short: "Parse epoch time",
 	Long: `Parses an epoch time value in seconds to a specified time zone. The
 default time zone is local.`,
@@ -39,5 +39,3 @@ default time zone is local.`,
 		}
 	},
 }
-
-

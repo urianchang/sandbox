@@ -1,15 +1,16 @@
 package main
+
 import "fmt"
 
 //: Change return type to contain multiple types
 func f() (int, int) {
-  //: Change expression after return to contain multiple expressions
-  return 5, 6
+	//: Change expression after return to contain multiple expressions
+	return 5, 6
 }
 
 func main() {
-  //: Change assignment statement so multiple values are on left side
-  x, y := f()
+	//: Change assignment statement so multiple values are on left side
+	x, y := f()
 }
 
 /* ====

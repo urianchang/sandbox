@@ -16,9 +16,9 @@ const LogFile = "/Users/urianchang/go/src/github.com/urianchang/LearnGo/internal
 var log *logrus.Logger
 var logFile *os.File
 
-type SimpleFormatter struct {}
+type SimpleFormatter struct{}
 
-func (f *SimpleFormatter) Format (entry *logrus.Entry) ([]byte, error) {
+func (f *SimpleFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	level := strings.ToUpper(entry.Level.String())
 	timestamp := entry.Time.Format(time.RFC3339)
 	return []byte(fmt.Sprintf("%s[%s] %s\n", level, timestamp, entry.Message)), nil
@@ -51,15 +51,15 @@ func NewRootCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Setting up the spinner
 			cfg := yacspin.Config{
-				Frequency: 100 * time.Millisecond,
-				CharSet: yacspin.CharSets[59],
-				Suffix:          " Task 1",
-				SuffixAutoColon: true,
-				StopCharacter:   "✓",
-				StopColors:      []string{"fgGreen"},
+				Frequency:         100 * time.Millisecond,
+				CharSet:           yacspin.CharSets[59],
+				Suffix:            " Task 1",
+				SuffixAutoColon:   true,
+				StopCharacter:     "✓",
+				StopColors:        []string{"fgGreen"},
 				StopFailCharacter: "✗",
-				StopFailColors: []string{"fgRed"},
-				Writer: cmd.OutOrStdout(),
+				StopFailColors:    []string{"fgRed"},
+				Writer:            cmd.OutOrStdout(),
 			}
 			spinner, _ := yacspin.New(cfg)
 			_ = spinner.Start()

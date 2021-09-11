@@ -1,9 +1,9 @@
 package main
 
 import (
-	"time"
-	"sync"
 	"log"
+	"sync"
+	"time"
 )
 
 func init() {
@@ -12,14 +12,14 @@ func init() {
 }
 
 type testConcurrency struct {
-	min int
-	max int
+	min     int
+	max     int
 	country string
 }
 
 func printCountry(test *testConcurrency, groupTest *sync.WaitGroup) {
-	for i :=test.max ; i>test.min; i-- {
-		time.Sleep(1*time.Millisecond)
+	for i := test.max; i > test.min; i-- {
+		time.Sleep(1 * time.Millisecond)
 		log.Println(test.country)
 	}
 
@@ -27,7 +27,7 @@ func printCountry(test *testConcurrency, groupTest *sync.WaitGroup) {
 	groupTest.Done()
 }
 
-func  main() {
+func main() {
 	groupTest := new(sync.WaitGroup)
 
 	japan := new(testConcurrency)
