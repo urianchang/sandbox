@@ -1,14 +1,15 @@
-'''
+"""
 Minimal Flask Application
 
 To run...
 
     FLASK_APP=hello.py flask run
 
-'''
+"""
 
 # Import Flask
 from flask import Flask
+
 # Create instance of Flask class
 app = Flask(__name__)
 
