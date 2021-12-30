@@ -26,4 +26,3 @@ public class Solution {
         System.out.println(neg_count);
     }
 }
-

@@ -1,4 +1,5 @@
 from .flaskr import app
+
 """
 The import statement brings the application instance
 into the top-level of the application package.

@@ -34,5 +34,3 @@ public class Solution {
         input.close();
     }
 }
-
-

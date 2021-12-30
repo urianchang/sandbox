@@ -51,7 +51,7 @@ There are eight primitive data types supported by the Java programming language:
    true/false conditions. Represents one bit of information, but its "size" is
    not precisely defined.
 8. __char__: Single 16-bit Unicode character. Minimum value of '\u0000' (or 0)
-   and a maximum value of '\uffff' (or 65,535 inclusive).  
+   and a maximum value of '\uffff' (or 65,535 inclusive).
 
 ### Default Values
 | Data Type              | Default Value (for fields) |
@@ -493,16 +493,16 @@ nested class. It doesn't require any synchronization and is easy to learn and
 implement.
 
 ```
-public class Singleton  {    
+public class Singleton  {
     private Singleton() {}
 
-    private static class SingletonHolder {    
+    private static class SingletonHolder {
         public static final Singleton instance = new Singleton();
-    }    
+    }
 
-    public static Singleton getInstance() {    
-        return SingletonHolder.instance;    
-    }    
+    public static Singleton getInstance() {
+        return SingletonHolder.instance;
+    }
 }
 ```
 
@@ -963,7 +963,7 @@ public class DataStructure {
 
             // Check if the current element is the last in the array
             return (nextIndex <= SIZE - 1);
-        }        
+        }
 
         public Integer next() {
 
@@ -1123,7 +1123,7 @@ public class HelloWorldAnonymousClasses {
         HelloWorldAnonymousClasses myApp =
             new HelloWorldAnonymousClasses();
         myApp.sayHello();
-    }            
+    }
 }
 ```
 
