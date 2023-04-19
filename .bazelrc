@@ -87,3 +87,5 @@ run:debug -- --node_options=--inspect-brk
 build:debug --compilation_mode=dbg
 
 ### USER PROPERTIES OVERRIDE ###
+# try-import %workspace%/.bazelrc.flare
+# try-import %workspace%/.bazelrc.bitrise

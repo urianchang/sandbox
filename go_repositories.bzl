@@ -1,12 +1,6 @@
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-def vinyl_go_repositories():
-    go_repository(
-        name = "co_honnef_go_tools",
-        importpath = "honnef.co/go/tools",
-        sum = "h1:3JgtbtFHMiCmsznwGVTUWbgGov+pVqnlf1dEJTNAXeM=",
-        version = "v0.0.1-2019.2.3",
-    )
+def all_go_repositories():
     go_repository(
         name = "com_github_bytedance_sonic",
         importpath = "github.com/bytedance/sonic",

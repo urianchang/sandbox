@@ -1,4 +1,4 @@
-module github.com/urianchang/sandbox/vinyl
+module github.com/urianchang/sandbox/humanize
 
 go 1.17
 

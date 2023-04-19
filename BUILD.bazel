@@ -54,12 +54,13 @@ gazelle(
 )
 
 # Sync golang deps for vinyl. Shorthand for:
-# bazel run //:gazelle -- update-repos --from_file=vinyl/go.mod -to_macro=go_repositories.bzl%vinyl_go_repositories
+# bazel run //:gazelle -- update-repos --from_file=vinyl/go.mod -to_macro=go_repositories.bzl%all_go_repositories
 gazelle(
     name = "gazelle-sync",
     args = [
         "-from_file=vinyl/go.mod",
-        "-to_macro=go_repositories.bzl%vinyl_go_repositories",
+        "-from_file=humanize/go.mod",
+        "-to_macro=go_repositories.bzl%all_go_repositories",
         "-prune",
     ],
     command = "update-repos",
