@@ -51,10 +51,10 @@ http_archive(
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
 # bazel run //:gazelle-sync
-load("//:go_repositories.bzl", "vinyl_go_repositories")
+load("//:go_repositories.bzl", "all_go_repositories")
 
-# gazelle:repository_macro go_repositories.bzl%vinyl_go_repositories
-vinyl_go_repositories()
+# gazelle:repository_macro go_repositories.bzl%all_go_repositories
+all_go_repositories()
 
 gazelle_dependencies()
 
