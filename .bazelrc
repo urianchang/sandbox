@@ -11,7 +11,7 @@ build --proto_toolchain_for_java @com_google_protobuf//:java_toolchain
 # Place the caches in well defined directories
 # This prevents weirdness when switching OSes, which has different default cache locations
 # Also helps when using both the commandline and an IDE
-build --disk_cache=~/.bazel/cache
+build --disk_cache=~/.bazel/cache     # Disable to force remote cache hits
 build --repository_cache=~/.bazel/repo_cache
 
 # Compatibility flags
