@@ -1,0 +1,72 @@
+load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+buildifier(
+    name = "buildifier_fix_all",
+    exclude_patterns = [
+        "*node_modules*",
+    ],
+    lint_mode = "fix",
+    mode = "fix",
+)
+
+buildifier(
+    name = "buildifier_format_check",
+    exclude_patterns = [
+        "*node_modules*",
+    ],
+    lint_mode = "",
+    mode = "check",
+)
+
+buildifier(
+    name = "buildifier_fix_format_warn_lint",
+    exclude_patterns = [
+        "*node_modules*",
+    ],
+    lint_mode = "warn",
+    mode = "fix",
+)
+
+buildifier(
+    name = "buildifier_check_format_warn_lint",
+    exclude_patterns = [
+        "*node_modules*",
+    ],
+    lint_mode = "warn",
+    mode = "check",
+)
+
+config_setting(
+    name = "no_colored_test_log",
+    values = {
+        "define": "no_colored_test_log=true",
+    },
+)
+
+gazelle(
+    name = "gazelle",
+    args = [
+        "-index=false",
+        "vinyl",
+    ],
+    prefix = "github.com/urianchang/sandbox",
+)
+
+# Sync golang deps for vinyl. Shorthand for:
+# bazel run //:gazelle -- update-repos --from_file=vinyl/go.mod -to_macro=go_repositories.bzl%vinyl_go_repositories
+gazelle(
+    name = "gazelle-sync",
+    args = [
+        "-from_file=vinyl/go.mod",
+        "-to_macro=go_repositories.bzl%vinyl_go_repositories",
+        "-prune",
+    ],
+    command = "update-repos",
+)
+
+filegroup(
+    name = "bazel_subsidiary_config",
+    srcs = glob(["*.bzl"]),
+    tags = ["bazel_subsidiary_config"],
+)
