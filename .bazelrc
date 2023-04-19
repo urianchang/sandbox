@@ -1,0 +1,89 @@
+# Performance tuning. See https://github.com/bazelbuild/rules_scala/blob/c83c8151f4f20c28babcb743f94688a3050c7b41/README.md
+# https://docs.bazel.build/versions/master/user-manual.html#flag--spawn_strategy
+build --strategy=Scalac=worker            # worker causes commands to be executed using a persistent worker, if available.
+build --strategy=Javac=local              # local causes commands to be executed as local subprocesses.
+build --worker_sandboxing                 # Sandbox all workers that aren't local
+
+# Proto toolchain
+build --proto_compiler @com_google_protobuf//:protoc
+build --proto_toolchain_for_java @com_google_protobuf//:java_toolchain
+
+# Place the caches in well defined directories
+# This prevents weirdness when switching OSes, which has different default cache locations
+# Also helps when using both the commandline and an IDE
+build --disk_cache=~/.bazel/cache
+build --repository_cache=~/.bazel/repo_cache
+
+# Compatibility flags
+# These usages should be removed gradually over time before the deprecated functionality
+# they are preserving is removed.
+
+# Error in pack_sources: in call to pack_sources(), parameter 'output_jar' is deprecated and will be removed soon
+build --incompatible_java_common_parameters=false
+
+# Toolchains
+build --java_runtime_version=remotejdk_11 --tool_java_runtime_version=11 --java_language_version=11 --tool_java_language_version=11
+run   --java_runtime_version=remotejdk_11 --tool_java_runtime_version=11 --java_language_version=11 --tool_java_language_version=11
+test  --java_runtime_version=remotejdk_11 --tool_java_runtime_version=11 --java_language_version=11 --tool_java_language_version=11
+build --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
+build --crosstool_top=@bazel_tools//tools/cpp:toolchain
+
+# This is required on a Mac but not on Linux worker....
+# build --platforms=@build_bazel_rules_nodejs//toolchains/node:linux_amd64
+
+# Pay less attention to the env vars
+build --incompatible_strict_action_env
+
+build --action_env=NODE_ENV=development
+
+#### ENVIRONMENT VARIABLES START ####
+
+#### ENVIRONMENT VARIABLES END ####
+
+# Every flag for the run command following this line is appended at the end of the run command, AFTER the targets.
+run --
+
+##
+## Global "test" configuration start
+## Note: Be sure to set appropriate flags on build (which test inherits) to ensure analysis cache reuse and cache hits
+##       Note below it's setting on build!!!
+##
+test --test_verbose_timeout_warnings
+test --test_output=errors
+test --test_timeout=120,-1,-1,-1
+
+##
+## Global "test" configuration end
+##
+
+##
+## Support for debugging NodeJS tests start
+##
+
+# Add the Bazel option `--config=debug` to enable this
+# --test_output=streamed
+#     Stream stdout/stderr output from each test in real-time.
+#     See https://docs.bazel.build/versions/master/user-manual.html#flag--test_output for more details.
+# --test_strategy=exclusive
+#     Run one test at a time.
+# --test_timeout=9999
+#     Prevent long running tests from timing out
+#     See https://docs.bazel.build/versions/master/user-manual.html#flag--test_timeout for more details.
+# --nocache_test_results
+#     Always run tests
+# --node_options=--inspect-brk
+#     Pass the --inspect-brk option to all tests which enables the node inspector agent.
+#     See https://nodejs.org/de/docs/guides/debugging-getting-started/#command-line-options for more details.
+# --compilation_mode=dbg
+#     Rules may change their build outputs if the compilation mode is set to dbg. For example,
+#     minifiers such as terser may make their output more human readable when this is set. Rules will pass `COMPILATION_MODE`
+#     to `nodejs_binary` executables via the actions.run env attribute.
+#     See https://docs.bazel.build/versions/master/user-manual.html#flag--compilation_mode for more details.
+test:debug --test_output=streamed --test_strategy=exclusive --test_timeout=9999 --nocache_test_results
+# Use bazel run with `--config=debug` to turn on the NodeJS inspector agent.
+# The node process will break before user code starts and wait for the debugger to connect.
+run:debug -- --node_options=--inspect-brk
+# The following option will change the build output of certain rules such as terser and may not be desirable in all cases
+build:debug --compilation_mode=dbg
+
+### USER PROPERTIES OVERRIDE ###

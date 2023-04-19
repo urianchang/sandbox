@@ -1,0 +1,45 @@
+version: 2.1
+
+jobs:
+  verify-pre-commit:
+    docker:
+      - image: cimg/python:3.9.16
+    working_directory: ~/repo/
+    steps:
+      - checkout
+      - run:
+          name: Combine precommit config and python versions for caching
+          command: |
+            cat .pre-commit-config.yaml > pre-commit-deps.txt
+            python -VV >> pre-commit-deps.txt
+      - restore_cache:
+          keys:
+            - v2-precommit-deps-{{ checksum "pre-commit-deps.txt" }}
+      - run:
+          name: Install Dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install --upgrade setuptools
+            pip install pre-commit
+            # Install the hooks now so that they'll be cached
+            pre-commit install-hooks
+      - save_cache:
+          paths:
+            - ~/.cache/pre-commit
+            - ./venv
+          key: v2-precommit-deps-{{ checksum "pre-commit-deps.txt" }}
+      - run:
+          name: Run pre-commit validations
+          command: |
+            . venv/bin/activate
+            SKIP=circleci-validate,no-commit-to-branch pre-commit run \
+              --show-diff-on-failure \
+              --from-ref origin/HEAD \
+              --to-ref HEAD
+
+workflows:
+  main:
+    jobs:
+      - verify-pre-commit

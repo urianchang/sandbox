@@ -13,3 +13,13 @@ Thumbs.db
 
 # VSCode
 .vscode/
+
+# Bazel
+/bazel-*
+.ijwb/
+.bazelrc.*
+
+#jenv
+.java-version
+.metals/
+.bloop
